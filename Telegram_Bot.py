@@ -2,7 +2,7 @@
 import g4f
 import telebot
 from time import sleep
-from g4f.Provider import Yqcloud
+from g4f.Provider import Bing
 import sqlite3
 from database import BAZA
 import config
@@ -50,26 +50,27 @@ def subs(message):
     
 @bot.message_handler(content_types=['text'])
 def ask(message):
-    ps = "(Примечание: Отвечай на русском языке) "
+    ps = "(Примечание: Отвечай без ссылок) "
     if (subs_check(message.from_user.id)):
         try:
             print("\n\nВопрос: {0}, от пользователя {1.first_name}\n".format(message.text, message.from_user))
             response = g4f.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4",
                 messages=[{"role": "user", "content": ps + message.text}],
-                provider= Yqcloud,
+                proxy="http://37.19.220.180:8443",
+                provider= Bing,
                 stream=True,
             )
             textCloud = ""
             limit = 0
-            sent_message = bot.send_message(message.chat.id, "...") 
+            sent_message = bot.send_message(message.chat.id, "...")
             for messaga in response:
                 print(messaga, flush=True, end='')
                 textCloud += messaga
                 limit+=1
-                if limit == 4:
+                if limit == 5:
                     limit = 0
-                    bot.edit_message_text(textCloud + "...", message.chat.id, sent_message.message_id)
+                    bot.edit_message_text(textCloud, message.chat.id, sent_message.message_id)
                     mem = textCloud
             if textCloud != mem:        
                 bot.edit_message_text(textCloud, message.chat.id, sent_message.message_id) 
