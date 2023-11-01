@@ -33,7 +33,7 @@ def subs(message):
         baza.add_subscriber(message.from_user.id, message.from_user.first_name)
         bot.send_message(message.chat.id, "Вы успешно подписались!")
         
-    elif (baza.subscriber_exists(message.from_user.id) and baza.subscriber_actual(message.from_user.id)):
+    elif (baza.subscriber_exists(message.from_user.id) and not baza.subscriber_actual(message.from_user.id)):
         baza.update_subscription(message.from_user.id, True)
         bot.send_message(message.chat.id, "Вы снова подписаны!")
     else:
