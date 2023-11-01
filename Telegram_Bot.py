@@ -24,36 +24,36 @@ def subs_check(messageID):
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
-    bot.send_message(message.chat.id, "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот с нейросетью gpt-4!\nЗадавайте любые вопросы!".format(message.from_user, bot.get_me()), parse_mode='html')
+    bot.send_message(message.chat.id, "Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ, {0.first_name}!\nРЇ - <b>{1.first_name}</b>, Р±РѕС‚ СЃ РЅРµР№СЂРѕСЃРµС‚СЊСЋ gpt-4!\nР—Р°РґР°РІР°Р№С‚Рµ Р»СЋР±С‹Рµ РІРѕРїСЂРѕСЃС‹!".format(message.from_user, bot.get_me()), parse_mode='html')
     
 
 @bot.message_handler(commands=['subscribe'])
 def subs(message):
     if (not baza.subscriber_exists(message.from_user.id)):
         baza.add_subscriber(message.from_user.id, message.from_user.first_name)
-        bot.send_message(message.chat.id, "Вы успешно подписались!")
+        bot.send_message(message.chat.id, "Р’С‹ СѓСЃРїРµС€РЅРѕ РїРѕРґРїРёСЃР°Р»РёСЃСЊ!")
         
     elif (baza.subscriber_exists(message.from_user.id) and baza.subscriber_actual(message.from_user.id)):
         baza.update_subscription(message.from_user.id, True)
-        bot.send_message(message.chat.id, "Вы снова подписаны!")
+        bot.send_message(message.chat.id, "Р’С‹ СЃРЅРѕРІР° РїРѕРґРїРёСЃР°РЅС‹!")
     else:
         baza.update_subscription(message.from_user.id, True)
-        bot.send_message(message.chat.id, "Вы уже подписались!")
+        bot.send_message(message.chat.id, "Р’С‹ СѓР¶Рµ РїРѕРґРїРёСЃР°Р»РёСЃСЊ!")
         
 @bot.message_handler(commands=['unsubscribe'])
 def subs(message):
     if (baza.subscriber_exists(message.from_user.id) and baza.subscriber_actual(message.from_user.id)):
         baza.update_subscription(message.from_user.id, False)
-        bot.send_message(message.chat.id, "Вы успешно отписались!")
+        bot.send_message(message.chat.id, "Р’С‹ СѓСЃРїРµС€РЅРѕ РѕС‚РїРёСЃР°Р»РёСЃСЊ!")
     else:
-        bot.send_message(message.chat.id, "Вы не подписаны!")
+        bot.send_message(message.chat.id, "Р’С‹ РЅРµ РїРѕРґРїРёСЃР°РЅС‹!")
     
 @bot.message_handler(content_types=['text'])
 def ask(message):
-    ps = "(Примечание: Отвечай на русском языке) "
+    ps = "(РџСЂРёРјРµС‡Р°РЅРёРµ: РћС‚РІРµС‡Р°Р№ РЅР° СЂСѓСЃСЃРєРѕРј СЏР·С‹РєРµ) "
     if (subs_check(message.from_user.id)):
         try:
-            print("\n\nВопрос: {0}, от пользователя {1.first_name}\n".format(message.text, message.from_user))
+            print("\n\nР’РѕРїСЂРѕСЃ: {0}, РѕС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ {1.first_name}\n".format(message.text, message.from_user))
             response = g4f.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[{"role": "user", "content": ps + message.text}],
@@ -74,9 +74,9 @@ def ask(message):
             if textCloud != mem:        
                 bot.edit_message_text(textCloud, message.chat.id, sent_message.message_id) 
         except telebot.apihelper.ApiTelegramException as e:
-            print(f"Ошибка: {e}! Ожидание 5 секунд")
+            print(f"РћС€РёР±РєР°: {e}! РћР¶РёРґР°РЅРёРµ 5 СЃРµРєСѓРЅРґ")
             sleep(5)
     else:
-        bot.send_message(message.chat.id, "Пожалуйста зарегистрируйтесь! /subscribe")
+        bot.send_message(message.chat.id, "РџРѕР¶Р°Р»СѓР№СЃС‚Р° Р·Р°СЂРµРіРёСЃС‚СЂРёСЂСѓР№С‚РµСЃСЊ! /subscribe")
         
 bot.polling(none_stop=True)
