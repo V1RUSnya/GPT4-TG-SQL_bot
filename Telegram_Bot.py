@@ -67,9 +67,9 @@ def ask(message):
                 print(messaga, flush=True, end='')
                 textCloud += messaga
                 limit+=1
-                if limit == 3:
+                if limit == 4:
                     limit = 0
-                    bot.edit_message_text(textCloud, message.chat.id, sent_message.message_id)
+                    bot.edit_message_text(textCloud + "...", message.chat.id, sent_message.message_id)
                     mem = textCloud
             if textCloud != mem:        
                 bot.edit_message_text(textCloud, message.chat.id, sent_message.message_id) 
