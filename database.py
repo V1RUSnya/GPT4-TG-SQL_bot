@@ -18,8 +18,7 @@ class BAZA:
     def subscriber_actual(self,user_id):
         with self.connection:
             result = self.cursor.execute('SELECT `status` FROM `subscriptions` WHERE `user_id` = ?', (user_id,)).fetchone()
-            result = not result
-            return result
+            return result[0]
 
     def add_subscriber(self, user_id, username, status = True):
         with self.connection:
