@@ -51,6 +51,8 @@ def subs(message):
 @bot.message_handler(content_types=['text'])
 def ask(message):
     ps = ""
+    textCloud = ""
+    limit = 0
     if (subs_check(message.from_user.id)):
         try:
             print("\n\nВопрос: {0}, от пользователя {1.first_name}\n".format(message.text, message.from_user))
@@ -61,8 +63,6 @@ def ask(message):
                 provider= Bing,
                 stream=True,
             )
-            textCloud = ""
-            limit = 0
             sent_message = bot.send_message(message.chat.id, "...")
             for messaga in response:
                 print(messaga, flush=True, end='')
@@ -70,7 +70,11 @@ def ask(message):
                 limit+=1
                 if limit == 15:
                     limit = 0
-                    bot.edit_message_text(textCloud, message.chat.id, sent_message.message_id)
+                    try:
+                        bot.edit_message_text(textCloud, message.chat.id, sent_message.message_id)
+                    except RuntimeError as e: 
+                        print(f"\n\nПопытка восстановления\nОшибка: {e}\n\n")
+                        sleep(5)
                     mem = textCloud
             if textCloud != mem:        
                 bot.edit_message_text(textCloud, message.chat.id, sent_message.message_id) 
