@@ -24,7 +24,7 @@ def subs_check(messageID):
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
-    bot.send_message(message.chat.id, "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот с нейросетью gpt-4!\nЗадавайте любые вопросы!".format(message.from_user, bot.get_me()), parse_mode='html')
+    bot.send_message(message.chat.id, "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот с настоящей нейросетью gpt-4!\nЗадавайте любые вопросы!".format(message.from_user, bot.get_me()), parse_mode='html')
     
 
 @bot.message_handler(commands=['subscribe'])
@@ -50,7 +50,7 @@ def subs(message):
     
 @bot.message_handler(content_types=['text'])
 def ask(message):
-    ps = "(Примечание: Отвечай без ссылок) "
+    ps = ""
     if (subs_check(message.from_user.id)):
         try:
             print("\n\nВопрос: {0}, от пользователя {1.first_name}\n".format(message.text, message.from_user))
@@ -68,7 +68,7 @@ def ask(message):
                 print(messaga, flush=True, end='')
                 textCloud += messaga
                 limit+=1
-                if limit == 5:
+                if limit == 15:
                     limit = 0
                     bot.edit_message_text(textCloud, message.chat.id, sent_message.message_id)
                     mem = textCloud
@@ -77,6 +77,8 @@ def ask(message):
         except telebot.apihelper.ApiTelegramException as e:
             print(f"Ошибка: {e}! Ожидание 5 секунд")
             sleep(5)
+        except AttributeError as e:
+            print(f"Ошибка: {e}!")
     else:
         bot.send_message(message.chat.id, "Пожалуйста зарегистрируйтесь! /subscribe")
         
