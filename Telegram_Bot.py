@@ -41,7 +41,7 @@ def subs(message):
         bot.send_message(message.chat.id, "Вы уже подписались!")
         
 @bot.message_handler(commands=['unsubscribe'])
-def subs(message):
+def unsubs(message):
     if (baza.subscriber_exists(message.from_user.id) and baza.subscriber_actual(message.from_user.id)):
         baza.update_subscription(message.from_user.id, False)
         bot.send_message(message.chat.id, "Вы успешно отписались!")
