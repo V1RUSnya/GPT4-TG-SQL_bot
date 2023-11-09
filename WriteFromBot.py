@@ -38,6 +38,11 @@ while True:
         break
     except:
         print("Ошибка!")
-        print(user_id)
-message = input("Что отправить?\n")
-bot.send_message(user_id, message)
+        
+while True:
+    try:
+        message = input("Что отправить?\n")
+        bot.send_message(user_id, message)
+        break
+    except:
+        print("Ошибка!")
