@@ -85,5 +85,10 @@ def ask(message):
             print(f"Ошибка: {e}!")
     else:
         bot.send_message(message.chat.id, "Пожалуйста зарегистрируйтесь! /subscribe")
-        
-bot.polling(none_stop=True)
+
+while True:
+    try:        
+        bot.polling(none_stop=True)
+    except:
+        print(f"\n\n\nПроизошла ошибка.\n\n"*2)
+        sleep(60)
