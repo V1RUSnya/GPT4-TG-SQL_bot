@@ -59,7 +59,7 @@ def ask(message):
             response = g4f.ChatCompletion.create(
                 model="gpt-4",
                 messages=[{"role": "user", "content": ps + message.text}],
-                proxy="http://37.19.220.180:8443",
+                proxy="http://216.80.39.89:3129",
                 provider= Bing,
                 stream=True,
             )
@@ -89,6 +89,6 @@ def ask(message):
 while True:
     try:        
         bot.polling(none_stop=True)
-    except:
+    except RuntimeError:
         print(f"\n\n\nПроизошла ошибка.\n\n"*2)
         sleep(60)
