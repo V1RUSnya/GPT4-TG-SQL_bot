@@ -1,4 +1,3 @@
-# -*- coding: cp1251 -*-
 import sqlite3
 
 class BAZA:

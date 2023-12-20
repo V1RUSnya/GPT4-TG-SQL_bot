@@ -1,4 +1,3 @@
-# -*- coding: cp1251 -*-
 import g4f
 import telebot
 from time import sleep
