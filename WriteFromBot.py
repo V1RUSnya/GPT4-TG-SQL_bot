@@ -43,6 +43,6 @@ while True:
     try:
         message = input("Что отправить?\n")
         bot.send_message(user_id, message)
-        break
     except:
         print("Ошибка!")
+    break
