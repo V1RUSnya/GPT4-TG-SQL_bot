@@ -9,7 +9,7 @@ import config
 
 g4f.debug.logging = True # enable logging
 g4f.check_version = False
-print(g4f.version)
+# print(g4f.version)
 
 bot = telebot.TeleBot(config.token)
 
