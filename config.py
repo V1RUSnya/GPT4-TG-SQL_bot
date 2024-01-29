@@ -1,1 +1,1 @@
-token = "6706488607:AAHBlfAwxxTNqvk0gVumYu10NSCsWkkWd_M" #Your token
+token = "" #Your token
